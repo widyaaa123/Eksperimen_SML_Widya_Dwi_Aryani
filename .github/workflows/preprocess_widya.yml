@@ -1,1 +1,33 @@
+name: Preprocess Dataset (Widya)
+
+on:
+  workflow_dispatch:   # workflow bisa dijalankan manual dari GitHub Actions
+
+jobs:
+  preprocess-job:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: "3.10"
+
+    - name: Install Dependencies
+      run: |
+        pip install pandas numpy scikit-learn
+
+    - name: Run Preprocessing Script
+      run: |
+        python preprocessing/automate_widya_dwi_aryani.py
+
+    - name: Upload Preprocessed Dataset
+      uses: actions/upload-artifact@v4
+      with:
+        name: widya_preprocessed_dataset
+        path: preprocessing/*.csv
+        retention-days: 7
 
